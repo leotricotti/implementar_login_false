@@ -38,9 +38,9 @@ export default class User {
   };
 
   //Metodo asyncrono que actualiza la contraseña
-  updatePassword = async (newPassword) => {
+  updatePassword = async (user, newPassword) => {
     try {
-      const respuesta = await usersModel.findByIdAndUpdate(result[0]._id, {
+      const respuesta = await usersModel.findByIdAndUpdate(user, {
         password: newPassword,
       });
       return respuesta;
