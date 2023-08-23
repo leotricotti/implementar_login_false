@@ -13,6 +13,7 @@ import SignUpRouter from "./routes/signup.routes.js";
 import SessionRouter from "./routes/session.routes.js";
 import ProductsRouter from "./routes/products.routes.js";
 import Products from "./dao/dbmanager/products.manager.js";
+import ForgotRouter from "./routes/forgot.routes.js";
 import RealTimeProducts from "./routes/realTimeProducts.routes.js";
 
 dotenv.config();
@@ -106,6 +107,7 @@ const authAdmin = async (req, res, next) => {
 // Routes
 app.use("/", LoginRouter);
 app.use("/signup", SignUpRouter);
+app.use("/forgot", ForgotRouter);
 app.use("/api/carts", auth, CartsRouter);
 app.use("/api/session", SessionRouter);
 app.use("/api/products", auth, ProductsRouter);

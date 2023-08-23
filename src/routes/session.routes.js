@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { hashPassword, comparePassword } from "../utils.js";
 import User from "../dao/dbmanager/users.manager.js";
 
 //Inicializa variables
@@ -9,9 +10,10 @@ const usersManager = new User();
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   try {
-    const result = await usersManager.login(username, password);
+    const validPassword = comparePassword(password, username);
+    const user = await usersManager.login(username, validPassword);
 
-    if (result.length === 0)
+    if (user.length === 0)
       return res.status(401).json({
         respuesta: "Usuario o contraseña incorrectos",
       });
@@ -19,12 +21,14 @@ router.post("/login", async (req, res) => {
       if (username === "adminCoder@coder.com" && password === "adminCod3r123") {
         req.session.user = username;
         req.session.admin = true;
+        delete user.password;
         res.status(200).json({
           respuesta: "Bienvenido al servidor",
         });
       } else {
         req.session.user = username;
         req.session.admin = false;
+        delete user.password;
         res.status(200).json({
           respuesta: "Bienvenido a la tienda",
         });
@@ -44,7 +48,7 @@ router.post("/signup", async (req, res) => {
       last_name,
       age,
       email,
-      password,
+      password: hashPassword(password),
     });
 
     if (result === null) {
@@ -53,7 +57,6 @@ router.post("/signup", async (req, res) => {
       });
     } else {
       req.session.user = email;
-      req.session.admin = true;
       res.status(200).json({
         respuesta: "Usuario creado exitosamente",
       });
@@ -85,7 +88,7 @@ router.get("/check", async (req, res) => {
 //Ruta que realiza el logout
 router.get("/logout", async (req, res) => {
   try {
-    const logout = await req.session.destroy();
+    const logout = req.session.destroy();
     if (logout) {
       res.redirect("/");
     } else {
@@ -95,6 +98,26 @@ router.get("/logout", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
+  }
+});
+
+//Ruta que recupera la contraseña
+router.post("/forgot", async (req, res) => {
+  const { username, newPassword } = req.body;
+
+  const result = await usersManager.getOne(username);
+  if (result.length === 0)
+    return res.status(401).json({
+      respuesta: "El usuario no existe",
+    });
+  else {
+    const updatePassword = await usersManager.updatePassword(
+      createHash(newPassword)
+    );
+    console.log(respuesta);
+    res.status(200).json({
+      respuesta: "Contrseña actualizada con éxito",
+    });
   }
 });
 
