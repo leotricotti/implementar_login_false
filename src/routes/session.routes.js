@@ -114,6 +114,7 @@ router.post("/forgot", async (req, res) => {
     const updatePassword = await usersManager.updatePassword(
       createHash(newPassword)
     );
+    console.log(updatePassword);
     console.log(respuesta);
     res.status(200).json({
       respuesta: "Contrseña actualizada con éxito",

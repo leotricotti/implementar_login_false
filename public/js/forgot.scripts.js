@@ -1,4 +1,4 @@
-//Funcion asincrona que actualiza la contraseña
+//Funcion que envia los datos al backend
 async function postForgot(username, newPassword) {
   const response = await fetch("/api/session/forgot", {
     method: "POST",
@@ -15,19 +15,39 @@ async function postForgot(username, newPassword) {
 //Capturamos el formulario de login
 const loginForm = document.getElementById("login-form");
 
-//Funcion que se ejecuta cuando se envia el formulario y actualiza la contraseña
+//Funcion que captura los datos y actualiza la contraseña
 loginForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const username = document.getElementById("username").value;
-  //const password = document.getElementById("password").value;
-  const newPassword = document.getElementById("newPassword").value;
-  const newTwoPassword = document.getElementById("newTwoPassword").value;
+  const password = document.getElementById("password").value;
+  const newPassword = document.getElementById("new-password").value;
 
-  if (newPassword !== newTwoPassword) {
-    alert("la nueva constrasena no coincide");
+  if (password !== newPassword) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Las contraseñas no coinciden. Por favor, inténtelo de nuevo",
+      showConfirmButton: false,
+      timer: 1800,
+    });
   } else {
     postForgot(username, newPassword)
-      .then((datos) => alert("Contrasena reiniciada", datos.respuesta))
-      .catch((err) => alert("algo a pasado, por favor valide"));
+      .then(() =>
+        Swal.fire({
+          icon: "success",
+          title: "Contraseña actualizada con éxito",
+          showConfirmButton: false,
+          timer: 1800,
+        })
+      )
+      .catch(() =>
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ha ocurrido un error. Por favor, inténtelo de nuevo",
+          showConfirmButton: false,
+          timer: 1800,
+        })
+      );
   }
 });

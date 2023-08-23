@@ -36,17 +36,17 @@ export default class User {
       return [];
     }
   };
-}
 
-//Metodo asyncrono que actualiza la contraseña
-updatePassword = async (newPassword) => {
-  try {
-    const respuesta = await usersModel.findByIdAndUpdate(result[0]._id, {
-      password: newPassword,
-    });
-    return respuesta;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-};
+  //Metodo asyncrono que actualiza la contraseña
+  updatePassword = async (newPassword) => {
+    try {
+      const respuesta = await usersModel.findByIdAndUpdate(result[0]._id, {
+        password: newPassword,
+      });
+      return respuesta;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  };
+}
