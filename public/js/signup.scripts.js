@@ -3,6 +3,11 @@ const moveToLogin = () => {
   window.location.href = "/";
 };
 
+// Dirije a recuperar contraseña
+const moveToForgot = () => {
+  window.location.href = "/forgot";
+};
+
 // Función para crear un usuario
 async function postSignup(first_name, last_name, age, username, password) {
   const data = {

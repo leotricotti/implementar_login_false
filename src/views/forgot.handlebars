@@ -12,10 +12,14 @@
             >
               <form id="login-form">
                 <div class="text-center mb-1">
-                  <p class="mb-3">Recupera tu constraseña: </p>
+                  <p class="mb-3">
+                    Recupera tu constraseña:
+                  </p>
                 </div>
                 <div class="mb-3">
-                  <label for="username" class="form-label">Usuario:</label>
+                  <label for="username" class="form-label">
+                    Usuario:
+                  </label>
                   <input
                     type="text"
                     class="form-control"
@@ -26,12 +30,16 @@
                   />
                 </div>
                 <div class="mb-3 position-relative">
-                  <label for="password" class="form-label">Nueva contraseña:</label>
-                  <i
-                    class="fa-regular fa-eye-slash show-password"
-                    id="eye-close"
-                  ></i>
-                  <i class="fa-regular fa-eye" id="eye-open"></i>
+                  <label for="password" class="form-label">
+                    Nueva contraseña:
+                  </label>
+                  <div id="eye-container">
+                    <i
+                      class="fa-regular fa-eye-slash show-password"
+                      id="eye-close"
+                    ></i>
+                    <i class="fa-regular fa-eye" id="eye-open"></i>
+                  </div>
                   <input
                     type="password"
                     class="form-control"
@@ -42,13 +50,16 @@
                   />
                 </div>
                 <div class="mb-3 position-relative">
-                  <label for="new-password" class="form-label">Repite
-                    contraseña:</label>
-                  <i
-                    class="fa-regular fa-eye-slash show-password"
-                    id="new-eye-close"
-                  ></i>
-                  <i class="fa-regular fa-eye" id="new-eye-open"></i>
+                  <label for="new-password" class="form-label">
+                    Repite contraseña:
+                  </label>
+                  <div id="new-eye-container">
+                    <i
+                      class="fa-regular fa-eye-slash show-password"
+                      id="new-eye-close"
+                    ></i>
+                    <i class="fa-regular fa-eye" id="new-eye-open"></i>
+                  </div>
                   <input
                     type="password"
                     class="form-control"
@@ -59,18 +70,26 @@
                   />
                 </div>
                 <div class="mb-3 d-flex gap-3">
-                  <p class="mb-0">¿No tienes cuenta?</p>
+                  <p class="mb-0">
+                    ¿No tienes cuenta?
+                  </p>
                   <a
                     href="/signup"
                     class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                  >Registrate</a>
+                  >
+                    Registrate
+                  </a>
                 </div>
-                <p class="text-center">o:</p>
+                <p class="text-center">
+                  o:
+                </p>
                 <button
                   type="submit"
                   id="forgot-button"
                   class="btn-submit w-100 mb-4 mt-2"
-                >Cambia tu constraseña</button>
+                >
+                  Cambia tu constraseña
+                </button>
               </form>
             </div>
           </div>
@@ -79,7 +98,7 @@
     </div>
   </div>
 </main>
-<!-- Show password -->
+<!-- Show Password -->
 <script src="/js/showPassword.scripts.js"></script>
 <!-- Custom JS -->
 <script src="/js/forgot.scripts.js"></script>

@@ -53,3 +53,23 @@ loginForm.addEventListener("submit", function (event) {
       );
   }
 });
+
+// Función para mostrar la contraseña
+const newEyeOpen = document.getElementById("new-eye-open");
+const newPassword = document.getElementById("new-password");
+const newEyeClose = document.getElementById("new-eye-close");
+const newEyeContainer = document.getElementById("new-eye-container");
+
+const showPassword = () => {
+  if (eyeOpen.classList.contains("show-password")) {
+    newPassword.type = "text";
+  } else {
+    newPassword.type = "password";
+  }
+};
+
+newEyeContainer.addEventListener("click", () => {
+  newEyeOpen.classList.toggle("show-password");
+  newEyeClose.classList.toggle("show-password");
+  showPassword();
+});

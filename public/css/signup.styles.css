@@ -91,7 +91,8 @@ a {
   opacity: 1;
 }
 
-.fa-eye-slash {
+.fa-eye-slash,
+.fa-eye {
   color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
   position: absolute;
@@ -102,15 +103,8 @@ a {
   transition: all 0.3s ease-in-out;
 }
 
-.fa-eye {
-  color: rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  position: absolute;
-  right: 16px;
-  bottom: 10px;
-  z-index: 99;
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
+.fa-eye-slash:hover {
+  color: rgb(0, 0, 0);
 }
 
 .show-password {
