@@ -39,14 +39,15 @@ signupForm.addEventListener("submit", function (event) {
 
   // Envía los datos del formulario de registro y crea un usuario
   postSignup(first_name, last_name, age, username, password).then((datos) => {
-    if (datos) {
+    if (datos.length > 0) {
       Swal.fire({
         icon: "success",
         title: "Usuario creado correctamente",
         showConfirmButton: false,
         timer: 1500,
+      }).then(() => {
+        moveToLogin();
       });
-      moveToLogin();
     } else {
       Swal.fire({
         icon: "error",
