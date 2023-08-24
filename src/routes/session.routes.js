@@ -1,5 +1,5 @@
-import { Router } from "express";
 import passport from "passport";
+import { Router } from "express";
 import User from "../dao/dbmanager/users.manager.js";
 import { hashPassword, comparePassword } from "../utils.js";
 

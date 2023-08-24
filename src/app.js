@@ -27,14 +27,6 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const MONGO_URI = process.env.MONGO_URI;
 
-// Middlewares
-app.use(express.json());
-app.use(passport.session());
-app.use(passport.initialize());
-app.use(express.static("public"));
-app.use(cookieParser("C0d3rS3cr3t"));
-app.use(express.urlencoded({ extended: true }));
-
 // Handlebars
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
@@ -75,6 +67,14 @@ const enviroment = async () => {
 };
 
 enviroment();
+
+// Middlewares
+app.use(express.json());
+app.use(passport.session());
+app.use(passport.initialize());
+app.use(express.static("public"));
+app.use(cookieParser("C0d3rS3cr3t"));
+app.use(express.urlencoded({ extended: true }));
 
 //Middleware para hacer privadas las rutas
 const auth = async (req, res, next) => {
