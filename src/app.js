@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import passport from "passport";
 import * as dotenv from "dotenv";
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
@@ -9,13 +10,15 @@ import cookieParser from "cookie-parser";
 import handlebars from "express-handlebars";
 import CartsRouter from "./routes/carts.routes.js";
 import LoginRouter from "./routes/login.routes.js";
+import ForgotRouter from "./routes/forgot.routes.js";
 import SignUpRouter from "./routes/signup.routes.js";
 import SessionRouter from "./routes/session.routes.js";
 import ProductsRouter from "./routes/products.routes.js";
 import Products from "./dao/dbmanager/products.manager.js";
-import ForgotRouter from "./routes/forgot.routes.js";
+import initializePassport from "./config/passport.config.js";
 import RealTimeProducts from "./routes/realTimeProducts.routes.js";
 
+//Inicializar servicios
 dotenv.config();
 const productsManager = new Products();
 
@@ -26,6 +29,8 @@ const MONGO_URI = process.env.MONGO_URI;
 
 // Middlewares
 app.use(express.json());
+app.use(passport.session());
+app.use(passport.initialize());
 app.use(express.static("public"));
 app.use(cookieParser("C0d3rS3cr3t"));
 app.use(express.urlencoded({ extended: true }));

@@ -1,69 +1,45 @@
 import { Router } from "express";
-import { hashPassword, comparePassword } from "../utils.js";
+import passport from "passport";
 import User from "../dao/dbmanager/users.manager.js";
+import { hashPassword, comparePassword } from "../utils.js";
 
 //Inicializa variables
 const router = Router();
 const usersManager = new User();
 
 //Ruta que realiza el login
-router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    const validPassword = comparePassword(password, username);
-    const user = await usersManager.login(username, validPassword);
-
-    if (user.length === 0)
-      return res.status(401).json({
-        respuesta: "Usuario o contraseña incorrectos",
-      });
-    else {
-      if (username === "adminCoder@coder.com" && password === "adminCod3r123") {
-        req.session.user = username;
-        req.session.admin = true;
-        delete user.password;
-        res.status(200).json({
-          respuesta: "Bienvenido al servidor",
-        });
-      } else {
-        req.session.user = username;
-        req.session.admin = false;
-        delete user.password;
-        res.status(200).json({
-          respuesta: "Bienvenido a la tienda",
-        });
-      }
-    }
-  } catch (error) {
-    console.log(error);
+router.post(
+  "/login",
+  passport.authenticate("login", { failureRedirect: "./faillogin" }),
+  async (req, res) => {
+    if (!req.user)
+      res.status(400).json({ respuesta: "Credenciales invalidas" });
+    req.session.user = {
+      first_name: req.user.first_name,
+      last_name: req.user.last_name,
+      email: req.user.email,
+      age: req.user.age,
+    };
+    res.status(200).json({ respuesta: "Bienvenido a la tienda" });
   }
+);
+
+//Ruta que devuelve un error si el login falla
+router.get("/faillogin", async (req, res) => {
+  res.status(401).json({ respuesta: "Credenciales invalidas" });
 });
 
 //Ruta que realiza el signup
-router.post("/signup", async (req, res) => {
-  const { first_name, last_name, age, email, password } = req.body;
-  try {
-    const result = await usersManager.signup({
-      first_name,
-      last_name,
-      age,
-      email,
-      password: hashPassword(password),
-    });
-
-    if (result === null) {
-      return res.status(401).json({
-        respuesta: "Algo salió mal. No hemos podido crear el usuario",
-      });
-    } else {
-      req.session.user = email;
-      res.status(200).json({
-        respuesta: "Usuario creado exitosamente",
-      });
-    }
-  } catch (error) {
-    console.log(error);
+router.post(
+  "/signup",
+  passport.authenticate("signup", { failureRedirect: "/failsignup" }),
+  async (req, res) => {
+    res.status(200).json({ respuesta: "Usuario creado con éxito" });
   }
+);
+
+router.get("/failsignup", async (req, res) => {
+  res.status(401).json({ respuesta: "Error al crear el usuario" });
 });
 
 //Ruta que comprueba si el usuario está logueado
