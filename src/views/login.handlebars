@@ -58,8 +58,13 @@
                     required
                   />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 position-relative">
                   <label for="password" class="form-label">Contraseña:</label>
+                  <i
+                    class="fa-regular fa-eye-slash show-password"
+                    id="eye-close"
+                  ></i>
+                  <i class="fa-regular fa-eye" id="eye-open"></i>
                   <input
                     type="password"
                     class="form-control"
@@ -120,5 +125,7 @@
     </div>
   </div>
 </main>
+<!-- Show password -->
+<script src="/js/showPassword.scripts.js"></script>
 <!-- Custom JS -->
 <script src="/js/login.scripts.js"></script>

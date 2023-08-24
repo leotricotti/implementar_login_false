@@ -25,8 +25,13 @@
                     required
                   />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 position-relative">
                   <label for="password" class="form-label">Nueva contraseña:</label>
+                  <i
+                    class="fa-regular fa-eye-slash show-password"
+                    id="eye-close"
+                  ></i>
+                  <i class="fa-regular fa-eye" id="eye-open"></i>
                   <input
                     type="password"
                     class="form-control"
@@ -36,9 +41,14 @@
                     required
                   />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 position-relative">
                   <label for="new-password" class="form-label">Repite
                     contraseña:</label>
+                  <i
+                    class="fa-regular fa-eye-slash show-password"
+                    id="eye-close"
+                  ></i>
+                  <i class="fa-regular fa-eye" id="eye-open"></i>
                   <input
                     type="password"
                     class="form-control"
@@ -47,6 +57,7 @@
                     autocomplete="current-password"
                     required
                   />
+                  <i class="fa-regular fa-eye-slash"></i>
                 </div>
                 <div class="mb-3 d-flex gap-3">
                   <p class="mb-0">¿No tienes cuenta?</p>
@@ -69,5 +80,7 @@
     </div>
   </div>
 </main>
+<!-- Show password -->
+<script src="/js/showPassword.scripts.js"></script>
 <!-- Custom JS -->
 <script src="/js/forgot.scripts.js"></script>

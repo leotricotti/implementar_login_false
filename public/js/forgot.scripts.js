@@ -38,6 +38,8 @@ loginForm.addEventListener("submit", function (event) {
           title: "Contraseña actualizada con éxito",
           showConfirmButton: false,
           timer: 1800,
+        }).then(() => {
+          window.location.href = "/";
         })
       )
       .catch(() =>
