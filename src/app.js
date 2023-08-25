@@ -75,9 +75,9 @@ const httpServer = app.listen(PORT, () => {
 
 // Socket
 const io = new Server(httpServer);
+
 // Código para el manejo de conexiones de socket
 io.on("connection", async (socket) => {
-  // Mensaje de bienvenida al cliente que se conectó
   console.log("Un cliente se ha conectado");
 
   // Obtener datos de la base de datos
