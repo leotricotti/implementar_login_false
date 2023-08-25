@@ -4,9 +4,6 @@ import passport from "passport";
 import * as dotenv from "dotenv";
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
-import session from "express-session";
-import MongoStore from "connect-mongo";
-import cookieParser from "cookie-parser";
 import handlebars from "express-handlebars";
 import CartsRouter from "./routes/carts.routes.js";
 import LoginRouter from "./routes/login.routes.js";
@@ -42,20 +39,6 @@ app.engine(
   })
 );
 
-// Connect to MongoDB
-app.use(
-  session({
-    store: MongoStore.create({
-      mongoUrl: MONGO_URI,
-      mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-      ttl: 30 * 60,
-    }),
-    secret: "codersecret",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-
 // Conexión respuesta de la base de datos
 const enviroment = async () => {
   try {
@@ -69,54 +52,21 @@ const enviroment = async () => {
 enviroment();
 
 // Middlewares
+initializePassport();
 app.use(express.json());
 app.use(passport.session());
 app.use(passport.initialize());
 app.use(express.static("public"));
-app.use(cookieParser("C0d3rS3cr3t"));
 app.use(express.urlencoded({ extended: true }));
-
-//Middleware para hacer privadas las rutas
-const auth = async (req, res, next) => {
-  try {
-    const session = await req.session;
-    const user = await session.user;
-    if (user && session) {
-      return next();
-    } else {
-      return res.status(401).json({
-        respuesta: "No estás autorizado",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// Middleware para validar si el usuario es administrador
-const authAdmin = async (req, res, next) => {
-  try {
-    const admin = req.session.admin;
-    if (admin) {
-      return next();
-    } else {
-      return res.status(401).json({
-        respuesta: "No estás autorizado",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 // Routes
 app.use("/", LoginRouter);
 app.use("/signup", SignUpRouter);
 app.use("/forgot", ForgotRouter);
-app.use("/api/carts", auth, CartsRouter);
+app.use("/api/carts", CartsRouter);
 app.use("/api/session", SessionRouter);
-app.use("/api/products", auth, ProductsRouter);
-app.use("/api/realtimeproducts", authAdmin, RealTimeProducts);
+app.use("/api/products", ProductsRouter);
+app.use("/api/realtimeproducts", RealTimeProducts);
 
 // Server
 const httpServer = app.listen(PORT, () => {
