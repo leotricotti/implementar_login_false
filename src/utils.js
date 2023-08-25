@@ -12,7 +12,7 @@ export const hashPassword = (password) => {
   return hashSync(password, salt);
 };
 
-// Comparar contraseña
+// Validar contraseña
 export const comparePassword = (password, passwordHash) => {
   return compareSync(password, passwordHash);
 };
